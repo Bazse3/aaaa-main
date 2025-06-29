@@ -171,7 +171,8 @@ function renderHour(hour, isToday, currentHour) {
   const dt = new Date(hour.dt * 1000);
   const hh = dt.getHours().toString().padStart(2, "0");
   const temp = Math.round(hour.temp);
-  const desc = hour.weather[0].description;
+const originalDesc = hour.weather[0].description;
+const desc = customDescriptions[originalDesc.toLowerCase()] || originalDesc;
   const icon = hour.weather[0].icon;
   const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
