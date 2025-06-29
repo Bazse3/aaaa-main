@@ -242,14 +242,95 @@ startWatching();
 
 
 const customDescriptions = {
-  "tiszta égbolt": "Nincs zötyi az égen 🌤️",
-  "enyhén felhős": "Pár zötyike lebeg ☁️",
-  "felhős égbolt": "Zötyik borítják az eget ☁️☁️",
-  "borús égbolt": "Telizötyizett az ég 😶‍🌫️",
-  "eső": "RONCII ESIIIK! 💧💥",
-  "havazás": "Roncifelhők küldik a havat ❄️⛄",
-  "köd": "Zötyi a földön 😶‍🌫️",
-  "zivatar": "Zötyi tombol, dörög a dorcájka ⚡🌩️",
-  "széllökés": "Zötyi fújja a frizurát 💨",
-  "havas eső": "Roncis mix: hó+eső 🧊💦"
+  // 🌤️ Derült idő
+  "tiszta égbolt": "Nincs zötyi az égen",
+  
+  // 🌤️ Enyhén felhős
+  "enyhén felhős": "Pár zötyike lebeg az égen",
+  "kevés felhő": "Pár zötyi pihenget az égen",
+
+  // ☁️ Felhős
+  "részben felhős": "Zötyi csak részidőben van jelen",
+  "többnyire felhős": "Zötyik már uralják az eget",
+  "felhős égbolt": "Zötyi mindenütt",
+  "erősen felhős": "Durva zötyitakarás",
+  "borult égbolt": "Teljes zötyitakarás, no napfény",
+
+  // 🌫️ Légköri jelenségek
+  "köd": "Zötyi a föld szintjén, semmit se látsz",
+  "füst": "Zötyiszagú a levegő",
+  "hamu": "Zötyihamu hullik le",
+  "szmog": "Ragacsos zötyilevegő",
+  "por": "Száll a zötyipor mindenfelé",
+  "homok": "Zötyi homokkal spékelve",
+  "homokvihar": "Zötyi tomboló porral",
+  "száraz köd": "Párás zötyike burkol be",
+  "zápor": "Roncik potyognak bőszen",
+
+  // 🌧️ Eső
+  "eső": "RONCII ESIIIK, nedves roncis idő",
+  "enyhe eső": "Csak csepeg, de zötyis",
+  "mérsékelt eső": "Normálisan roncizik",
+  "heves eső": "Zúdul a zötyifelhőből",
+  "záporok": "Zötyifürdő szakaszosan",
+  "heves zápor": "Rohadó zötyizápor",
+  "intenzív zápor": "Nagyon zötyis",
+  "szitáló eső": "Finom ronciszitálás",
+  "jégeső": "Ronci jég módba kapcsolt",
+
+  // ❄️ Hó
+  "havazás": "Ronci potyog pelyhekben",
+  "enyhe havazás": "Csak picit zötyizik",
+  "heves havazás": "Totális zötyihócsapás",
+  "havas eső": "Vegyes zötyi: víz + hó",
+  "hózápor": "Zötyihó sprintel lefelé",
+  "jég": "Kőkemény zötyifagy",
+  "havaseső": "Zötyis zagyvaság hullik",
+
+  // ⚡ Zivatar
+  "zivatar": "Zötyi tombol, dorcájka dörög",
+  "enyhe zivatar": "Zötyike csak próbálkozik",
+  "erős zivatar": "Totál dorcázós zötyi",
+  "villámlás esővel": "Dorcájka + ronci kombó",
+  "villámlás eső nélkül": "Száraz dorcájka-villanás",
+
+  // 💨 Szél
+  "széllökés": "Zötyiszél borzolja a hajad",
+  "viharos szél": "Zötyihurrikán jelleg",
+  "tornádó": "Totál zötyipusztító mód",
+
+  // 🌫️ Egyéb
+  "párás idő": "Zötyi lebeg a semmiben",
+  "ködös idő": "Zötyihomály mindenhol",
+  "derült idő": "Zötyimentes örömnap",
 };
+
+function szamitsSzottyadasSzint(homerseklet) {
+  if (homerseklet <= -5) return 1;
+  if (homerseklet <= 0) return 2;
+  if (homerseklet <= 5) return 3;
+  if (homerseklet <= 10) return 4;
+  if (homerseklet <= 18) return 5;
+  if (homerseklet <= 24) return 6;
+  if (homerseklet <= 29) return 7;
+  if (homerseklet <= 32) return 8;
+  if (homerseklet <= 35) return 9;
+  return 10;
+}
+
+function frissitsSzottyadasMerce(homerseklet) {
+  const szint = szamitsSzottyadasSzint(homerseklet);
+  document.getElementById("szottyadasSzint").textContent = szint;
+
+  const sávok = document.querySelectorAll(".szint");
+  sávok.forEach((sáv, index) => {
+    if (index < szint) {
+      sáv.classList.add("active");
+    } else {
+      sáv.classList.remove("active");
+    }
+  });
+}
+
+const aktualisHomerseklet = 28; // Vagy valami élő adatból pl. hour.temp
+frissitsSzottyadasMerce(aktualisHomerseklet);
