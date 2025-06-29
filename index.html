@@ -2,42 +2,40 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Szottyadás Mérce + Időjárás</title>
+  <title>Időjárás + Dátumválasztó</title>
   <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
   <header>
-    <h1>Szottyadás Mérce</h1>
-    <div>
-      <input type="text" id="cityInput" placeholder="Város keresése..." />
+    <h1>🌤️ Időjárás óránként</h1>
+    <div id="search-container">
+      <input type="text" id="cityInput" placeholder="Írd be a várost..." />
       <button id="searchBtn">Keresés</button>
     </div>
-    <div id="locationName">Város: --</div>
+    <h2 id="locationName">Város: --</h2>
+    <div id="dateSelector"></div>
   </header>
 
-  <section id="dateSelector"></section>
+  <div id="szottyadasContainer">
+  <div id="szottyadasLabel">Szottyadás mérce: <span id="szottyadasSzint">–</span></div>
+  <div id="szottyadasMerce">
+    <!-- 10 sáv -->
+    <div class="szint" data-szint="1"></div>
+    <div class="szint" data-szint="2"></div>
+    <div class="szint" data-szint="3"></div>
+    <div class="szint" data-szint="4"></div>
+    <div class="szint" data-szint="5"></div>
+    <div class="szint" data-szint="6"></div>
+    <div class="szint" data-szint="7"></div>
+    <div class="szint" data-szint="8"></div>
+    <div class="szint" data-szint="9"></div>
+    <div class="szint" data-szint="10"></div>
+  </div>
+</div>
 
-  <main>
-    <div id="weather"></div>
 
-    <div id="szottyadasMerce">
-      <h2>Szottyadás szint:</h2>
-      <div id="szottyadasSzint" class="szintszam">--</div>
-      <div class="szintsor">
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-        <div class="szint"></div>
-      </div>
-    </div>
-  </main>
+  <section id="weather"></section>
 
   <script src="scripts.js"></script>
 </body>
