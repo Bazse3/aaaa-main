@@ -7,6 +7,39 @@ body {
   color: #333;
 }
 
+.weather-card.current-hour {
+  background: #ffd54f;
+  color: #3e2723;
+  font-weight: 700;
+  box-shadow: 0 0 10px #ffc107aa;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eee;
+  }
+
+  #locationName {
+    color: #eee !important;
+  }
+
+  /* A sima időjárás kártyák sötét módhoz */
+  #weather .weather-card:not(.current-hour) {
+    background-color: #222;
+    color: #eee;
+    box-shadow: 0 0 8px #444;
+  }
+
+  /* Ikonok világos árnyékkal */
+  #weather .weather-card img {
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+  }
+}
+
+
+
+
 header {
   margin-bottom: 20px;
 }
@@ -33,7 +66,7 @@ button#searchBtn {
   cursor: pointer;
   border-radius: 8px;
   border: none;
-  background-color: #1976d2;
+  background-color: #f80;;
   color: white;
   transition: background-color 0.3s ease;
 }
@@ -72,10 +105,10 @@ button#searchBtn:hover {
 }
 
 .date-button.active {
-  background-color: #1976d2;
+  background-color: #f80;;
   color: white;
   font-weight: 700;
-  box-shadow: 0 0 10px #1976d2aa;
+  box-shadow: 0 0 10px #f80;;
 }
 
 #weather {
