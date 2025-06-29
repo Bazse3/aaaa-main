@@ -241,3 +241,15 @@ startWatching();
 
 
 
+const customDescriptions = {
+  "tiszta égbolt": "Nincs zötyi az égen 🌤️",
+  "enyhén felhős": "Pár zötyike lebeg ☁️",
+  "felhős égbolt": "Zötyik borítják az eget ☁️☁️",
+  "borús égbolt": "Telizötyizett az ég 😶‍🌫️",
+  "eső": "RONCII ESIIIK! 💧💥",
+  "havazás": "Roncifelhők küldik a havat ❄️⛄",
+  "köd": "Zötyi a földön 😶‍🌫️",
+  "zivatar": "Zötyi tombol, dörög a dorcájka ⚡🌩️",
+  "széllökés": "Zötyi fújja a frizurát 💨",
+  "havas eső": "Roncis mix: hó+eső 🧊💦"
+};
