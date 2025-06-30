@@ -253,15 +253,27 @@ button#searchBtn:hover {
   }
 }
 
-  @media (max-width: 900px) {
-    #footer-ads {
-      flex-direction: column;
-      gap: 15px;
-      padding: 10px;
-    }
-    .footer-ad {
-      width: 100% !important;
-      max-width: 400px;
-      margin: 0 auto;
-    }
+/* 🦶 Láb reklám */
+#footer-ads {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding: 10px;
+}
+
+.footer-ad {
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 500px) {
+  #footer-ads {
+    flex-direction: column;
+    align-items: center;
   }
+}
