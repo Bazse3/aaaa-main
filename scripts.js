@@ -67,13 +67,43 @@ async function getWeatherByCity(city) {
     const { lat, lon, name } = geoData[0];
     cityInput.value = name;
 
-    getWeatherByCoords(lat, lon, name);
+async function getWeatherByCoords(lat, lon, cityName = null) {
+  weatherDiv.innerHTML = "⏳ Betöltés...";
+  locationNameEl.textContent = "Város: ...";
+  dateSelector.innerHTML = "";
+
+  try {
+    // Ha nincs megadva városnév, kérjük le
+    if (!cityName) {
+      const geoRes = await fetch(
+        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${openWeatherApiKey}`
+      );
+      const geoData = await geoRes.json();
+      if (geoData.length > 0) {
+        cityName = geoData[0].name;
+      } else {
+        cityName = `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+      }
+    }
+
+    locationNameEl.textContent = `Város: ${cityName}`;
+
+    const weatherRes = await fetch(
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,daily,alerts&units=metric&lang=hu&appid=${openWeatherApiKey}`
+    );
+    const weatherData = await weatherRes.json();
+
+    weatherDataGlobal = weatherData;
+    createDateButtons();
+    const todayStr = new Date().toISOString().split("T")[0];
+    selectDate(todayStr);
   } catch (error) {
     console.error(error);
-    weatherDiv.innerHTML = "❌ Hiba történt az adatok lekérésekor.";
+    weatherDiv.innerHTML = "❌ Hiba történt az időjárás lekérésekor.";
     locationNameEl.textContent = "Város: --";
   }
 }
+
 
 async function getWeatherByCoords(lat, lon, cityName) {
   weatherDiv.innerHTML = "⏳ Betöltés...";
