@@ -7,45 +7,12 @@ body {
   color: #333;
 }
 
-.weather-card.current-hour {
-  background: #ffd54f;
-  color: #3e2723;
-  font-weight: 700;
-  box-shadow: 0 0 10px #ffc107aa;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #121212;
-    color: #eee;
-  }
-
-  #locationName {
-    color: #eee !important;
-  }
-
-  /* A sima időjárás kártyák sötét módhoz */
-  #weather .weather-card:not(.current-hour) {
-    background-color: #222;
-    color: #eee;
-    box-shadow: 0 0 8px #444;
-  }
-
-  /* Ikonok világos árnyékkal */
-  #weather .weather-card img {
-    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
-  }
-}
-
-
-
-
 header {
   margin-bottom: 20px;
 }
 
 #search-container {
-  margin: 10px auto 10px;
+  margin: 10px auto;
   max-width: 320px;
   display: flex;
   justify-content: center;
@@ -66,7 +33,7 @@ button#searchBtn {
   cursor: pointer;
   border-radius: 8px;
   border: none;
-  background-color: #f80;;
+  background-color: #f80;
   color: white;
   transition: background-color 0.3s ease;
 }
@@ -105,10 +72,10 @@ button#searchBtn:hover {
 }
 
 .date-button.active {
-  background-color: #f80;;
+  background-color: #f80;
   color: white;
   font-weight: 700;
-  box-shadow: 0 0 10px #f80;;
+  box-shadow: 0 0 10px #f80;
 }
 
 #weather {
@@ -118,19 +85,26 @@ button#searchBtn:hover {
   gap: 30px;
 }
 
+/* 🔥 Vízhintes scrollhoz módosított konténer */
 .weather-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  gap: 10px;
+  scroll-snap-type: x mandatory;
 }
 
+/* 🔥 Kártyák vízszintre optimalizálva */
 .weather-card {
+  min-width: 120px;
+  flex: 0 0 auto;
   background: #e1f5fe;
   border-radius: 8px;
   padding: 12px;
   font-size: 14px;
+  text-align: center;
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+  scroll-snap-align: start;
 }
 
 .weather-card strong {
@@ -145,69 +119,6 @@ button#searchBtn:hover {
   color: #3e2723;
   font-weight: 700;
   box-shadow: 0 0 10px #ffc107aa;
-}
-
-/* Mobil reszponzív */
-@media (max-width: 600px) {
-  .weather-container {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-  }
-
-  #search-container {
-    flex-direction: column;
-    max-width: 100%;
-    gap: 8px;
-  }
-
-  #cityInput {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  button#searchBtn {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  #dateSelector {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    max-width: 100%;
-  }
-
-  .date-button {
-    padding: 10px 12px;
-    font-size: 16px;
-  }
-
-  .weather-card {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .weather-card img {
-    width: 36px !important;
-    height: 36px !important;
-  }
-}
-
-/* Kis tabletek, nagyobb mobilok */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .weather-container {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-
-  .date-button {
-    padding: 10px 16px;
-    font-size: 17px;
-  }
-
-  .weather-card img {
-    width: 44px !important;
-    height: 44px !important;
-  }
 }
 
 #szottyadasContainer {
@@ -240,6 +151,78 @@ button#searchBtn:hover {
   background-color: #f80;
 }
 
+/* 🌒 Sötét mód */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eee;
+  }
+
+  #locationName {
+    color: #eee !important;
+  }
+
+  #weather .weather-card:not(.current-hour) {
+    background-color: #222;
+    color: #eee;
+    box-shadow: 0 0 8px #444;
+  }
+
+  #weather .weather-card img {
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+  }
+}
+
+/* 📱 Mobil reszponzív */
+@media (max-width: 600px) {
+  #search-container {
+    flex-direction: column;
+    max-width: 100%;
+    gap: 8px;
+  }
+
+  #cityInput {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+  button#searchBtn {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+  #dateSelector {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .date-button {
+    padding: 10px 12px;
+    font-size: 16px;
+  }
+
+  .weather-card img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+/* Kis tabletek, nagyobb mobilok */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .date-button {
+    padding: 10px 16px;
+    font-size: 17px;
+  }
+
+  .weather-card img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+/* 💰 Reklám doboz jobbra lent */
 #ad-container {
   position: fixed;
   bottom: 20px;
@@ -261,6 +244,7 @@ button#searchBtn:hover {
   }
 }
 
+/* 🦶 Láb reklám */
 #footer-ads {
   display: flex;
   justify-content: center;
