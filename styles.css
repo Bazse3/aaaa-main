@@ -156,6 +156,92 @@ button#searchBtn:hover {
   background-color: #f7961c;
 }
 
+/* TOP container új elrendezés: bal oldalon nagy banner, jobb oldalon jobb felső reklám + infó egymás mellett */
+#top-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+/* Bal oldali nagy banner */
+#top-left-ad {
+  width: 728px;
+  height: 90px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* Jobb oldali jobb felső blokk: reklám + info egymás mellett */
+#top-right-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 15px;
+  /* max szélesség hogy ne nőjön túl */
+  max-width: 350px;
+  flex-wrap: nowrap;
+}
+
+/* Jobb felső reklám */
+#top-right-ad {
+  width: 300px;
+  height: 250px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* A figyelmeztető infó doboz a jobb reklám mellett */
+#top-info {
+  flex: 1;
+  background: #f0f8ff;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  font-size: 16px;
+  color: #003366;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 15px;
+  user-select: none;
+}
+
+/* Alsó két banner fixen a képernyő alján, egymás mellett középen */
+#bottom-ads {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  background: rgba(255,255,255,0.95);
+  padding: 8px 15px;
+  box-shadow: 0 -1px 10px rgba(0,0,0,0.2);
+  border-radius: 12px 12px 0 0;
+  z-index: 11000;
+  max-width: 720px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Alsó reklám dobozok */
+#bottom-ads .footer-ad {
+  width: 320px;
+  height: 50px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
 /* 🌒 Sötét mód */
 @media (prefers-color-scheme: dark) {
   body {
@@ -206,51 +292,34 @@ button#searchBtn:hover {
 }
 
 /* 📱 Mobil reszponzív */
-@media (max-width: 600px) {
-  #search-container {
+@media (max-width: 1024px) {
+  #top-container {
     flex-direction: column;
-    max-width: 100%;
-    gap: 8px;
+    align-items: center;
   }
 
-  #cityInput {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  button#searchBtn {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  #dateSelector {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    max-width: 100%;
-  }
-
-  .date-button {
-    padding: 10px 12px;
-    font-size: 16px;
-  }
-
-  .weather-card img {
-    width: 36px !important;
-    height: 36px !important;
-  }
-
-  /* Mobilon a fix bannerek statikusak lesznek */
-  #top-left-ad,
-  #top-right-ad {
-    position: static;
+  #top-left-ad {
     width: 100%;
-    height: auto !important;
+    max-width: 728px;
+    height: 90px;
     margin-bottom: 10px;
   }
 
+  #top-right-container {
+    width: 100%;
+    max-width: 350px;
+    justify-content: center;
+  }
+
+  #top-right-ad {
+    width: 300px;
+    height: 250px;
+  }
+
   #top-info {
-    margin-top: 0;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px;
   }
 
   #bottom-ads {
@@ -264,94 +333,4 @@ button#searchBtn:hover {
     width: 100%;
     height: auto !important;
   }
-}
-
-/* Kis tabletek, nagyobb mobilok */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .date-button {
-    padding: 10px 16px;
-    font-size: 17px;
-  }
-
-  .weather-card img {
-    width: 44px !important;
-    height: 44px !important;
-  }
-}
-
-/* TOP container - most már nem használjuk, mert fix pozíciójú bannerek */
-
-/* Fix pozíció a bal felső sarokban lévő bannernek */
-#top-left-ad {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 728px;
-  height: 90px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  border-radius: 6px;
-  overflow: hidden;
-  background: #fff;
-  z-index: 12000;
-  transition: background-color 0.3s ease;
-}
-
-/* Fix pozíció a jobb felső sarokban lévő bannernek */
-#top-right-ad {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 250px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  border-radius: 6px;
-  overflow: hidden;
-  background: #fff;
-  z-index: 12000;
-  transition: background-color 0.3s ease;
-}
-
-/* A top-info doboz alá kell, hogy ne fedje a fix bannereket */
-#top-info {
-  margin-top: 110px;
-  padding: 10px 15px;
-  background: #f0f8ff;
-  border-radius: 6px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  font-size: 16px;
-  color: #003366;
-  font-weight: 600;
-  text-align: center;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Alsó két banner fixen a képernyő alján, egymás mellett középen */
-#bottom-ads {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 20px;
-  background: rgba(255,255,255,0.95);
-  padding: 8px 15px;
-  box-shadow: 0 -1px 10px rgba(0,0,0,0.2);
-  border-radius: 12px 12px 0 0;
-  z-index: 11000;
-  max-width: 720px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Alsó reklám dobozok */
-#bottom-ads .footer-ad {
-  width: 320px;
-  height: 50px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  background: white;
 }
