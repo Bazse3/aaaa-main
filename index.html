@@ -58,58 +58,23 @@
   <script type="text/javascript" src="//www.highperformanceformat.com/427423b06aa913361122e7ec2e0eb736/invoke.js"></script>
 </div>
 
-<!-- Footer hirdetések -->
-<footer id="footer-ads" style="
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 40px;
-  padding: 15px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.05);
-">
-  <div class="footer-ad" style="width: 320px; max-width: 100%; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius:6px; overflow:hidden;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '16bad07b7a4714bb272fd2eb08c44791',
-        'format' : 'iframe',
-        'height' : 60,
-        'width' : 468,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/16bad07b7a4714bb272fd2eb08c44791/invoke.js"></script>
-  </div>
+  <section id="atlag"></section>
+  <section id="weather"></section>
 
-  <div class="footer-ad" style="width: 320px; max-width: 100%; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius:6px; overflow:hidden;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '29a246baa8f6ee357125520269d2d34d',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/29a246baa8f6ee357125520269d2d34d/invoke.js"></script>
-  </div>
+  <script src="scripts.js"></script>
 
-  <div class="footer-ad" style="width: 728px; max-width: 100%; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius:6px; overflow:hidden;">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '8e146b349def58eb449e117d7fee4221',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/8e146b349def58eb449e117d7fee4221/invoke.js"></script>
-  </div>
-</footer>
+  @media (max-width: 900px) {
+    #footer-ads {
+      flex-direction: column;
+      gap: 15px;
+      padding: 10px;
+    }
+    .footer-ad {
+      width: 100% !important;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
 
 
 </body>
