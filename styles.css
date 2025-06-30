@@ -260,3 +260,27 @@ button#searchBtn:hover {
     justify-content: center;
   }
 }
+
+#footer-ads {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  padding: 10px;
+}
+
+.footer-ad {
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 500px) {
+  #footer-ads {
+    flex-direction: column;
+    align-items: center;
+  }
+}
