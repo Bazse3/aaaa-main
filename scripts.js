@@ -6,8 +6,8 @@ const searchBtn = document.getElementById("searchBtn");
 const locationNameEl = document.getElementById("locationName");
 const dateSelector = document.getElementById("dateSelector");
 
-let weatherDataGlobal = null; // tárolja a lekért adatokat
-let selectedDate = null; // kiválasztott dátum string (YYYY-MM-DD)
+let weatherDataGlobal = null;
+let selectedDate = null;
 
 searchBtn.addEventListener("click", () => {
   const city = cityInput.value.trim();
@@ -25,13 +25,11 @@ cityInput.addEventListener("keydown", (e) => {
   }
 });
 
-// AUTOMATIKUS HELYMEGHATÁROZÁS
 window.onload = () => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords;
-        console.log("Pozíció megkapva:", latitude, longitude);
         getWeatherByCoords(latitude, longitude);
       },
       (error) => {
@@ -49,7 +47,6 @@ window.onload = () => {
   }
 };
 
-
 async function getWeatherByCity(city) {
   weatherDiv.innerHTML = "⏳ Betöltés...";
   locationNameEl.textContent = "Város: ...";
@@ -57,9 +54,7 @@ async function getWeatherByCity(city) {
 
   try {
     const geoRes = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
-        city
-      )}&limit=1&appid=${openWeatherApiKey}`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=1&appid=${openWeatherApiKey}`
     );
     const geoData = await geoRes.json();
 
@@ -94,11 +89,7 @@ async function getWeatherByCoords(lat, lon, cityName) {
     const weatherData = await weatherRes.json();
 
     weatherDataGlobal = weatherData;
-
-    // dátumok legyártása (7 napra előre)
     createDateButtons();
-
-    // alapértelmezett kiválasztott nap: mai nap
     const todayStr = new Date().toISOString().split("T")[0];
     selectDate(todayStr);
   } catch (error) {
@@ -133,49 +124,65 @@ function createDateButtons() {
 function renderWeatherForDate(dateStr) {
   if (!weatherDataGlobal) return;
 
+  const now = new Date();
+  const currentDateStr = now.toISOString().split("T")[0];
+  const currentHour = now.getHours();
+
+  if (dateStr < currentDateStr) {
+    dateStr = currentDateStr;
+    selectDate(currentDateStr);
+  }
+
   const hoursForDay = weatherDataGlobal.hourly.filter((hour) => {
     const dt = new Date(hour.dt * 1000);
-    const localDateStr = dt.getFullYear() + "-" +
-      String(dt.getMonth() + 1).padStart(2, "0") + "-" +
-      String(dt.getDate()).padStart(2, "0");
+    const localDateStr = dt.toISOString().split("T")[0];
     return localDateStr === dateStr;
   });
 
   if (hoursForDay.length === 0) {
     weatherDiv.innerHTML = `<p>Nem elérhető adat erre a napra.</p>`;
-    frissitsSzottyadasMerce(null); // vagy 0 érték
+    frissitsSzottyadasMerce(null);
     return;
   }
 
-  // Átlag, max, min hőmérséklet számítása
-  const temps = hoursForDay.map(h => h.temp);
-  const avgTemp = (temps.reduce((a,b) => a + b, 0) / temps.length);
+const temps = hoursForDay.map(h => h.temp);
+const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
 
-  // Szottyadás mérce frissítése
+const avgTempStr = avgTemp.toFixed(1);
+const maxTemp = Math.max(...temps).toFixed(1);
+const minTemp = Math.min(...temps).toFixed(1);
+
+const isToday = (dateStr === currentDateStr);
+
+// Szottyadás mérce frissítése
+if (isToday) {
+  // próbáljuk meg lekérni a jelenlegi órához tartozó hőmérsékletet
+  const currentHourData = hoursForDay.find(h => {
+    const hour = new Date(h.dt * 1000).getHours();
+    return hour === currentHour;
+  });
+  if (currentHourData) {
+    frissitsSzottyadasMerce(currentHourData.temp);
+  } else {
+    frissitsSzottyadasMerce(avgTemp); // fallback
+  }
+} else {
   frissitsSzottyadasMerce(avgTemp);
-
-  const avgTempStr = avgTemp.toFixed(1);
-  const maxTemp = Math.max(...temps).toFixed(1);
-  const minTemp = Math.min(...temps).toFixed(1);
-
-  const now = new Date();
-  const currentHour = now.getHours();
-  const currentDateStr = now.toISOString().split("T")[0];
-
-  weatherDiv.innerHTML = `
-    <div class="day-section">
-      <h2>${dateStr === currentDateStr ? "Mai nap" : dateStr}</h2>
-      <p><strong>Átlag: ${avgTempStr}°C | Max: ${maxTemp}°C | Min: ${minTemp}°C</strong></p>
-      <div class="weather-container">
-        ${hoursForDay
-          .map(hour => renderHour(hour, dateStr === currentDateStr, currentHour))
-          .join("")}
-      </div>
-    </div>
-  `;
 }
 
+weatherDiv.innerHTML = `
+  <div class="day-section">
+    <h2>${isToday ? "Mai nap" : dateStr}</h2>
+    <p><strong>Átlag: ${avgTempStr}°C | Max: ${maxTemp}°C | Min: ${minTemp}°C</strong></p>
+    <div class="weather-container">
+      ${hoursForDay
+        .map(hour => renderHour(hour, isToday, currentHour))
+        .join("")}
+    </div>
+  </div>
+`;
 
+}
 
 function renderHour(hour, isToday, currentHour) {
   const dt = new Date(hour.dt * 1000);
@@ -198,122 +205,13 @@ function renderHour(hour, isToday, currentHour) {
   `;
 }
 
-function renderEmptyHour() {
-  return `
-    <div class="weather-card" style="opacity:0.3; color:#888;">
-      <strong>--:--</strong>
-      <br>–<br>–
-    </div>
-  `;
-}
-
 function selectDate(dateStr) {
   selectedDate = dateStr;
-
-  // Aktiváljuk a kiválasztott gombot, kikapcsoljuk a többit
   Array.from(dateSelector.children).forEach(btn => {
     btn.classList.toggle("active", btn.dataset.date === dateStr);
   });
-
   renderWeatherForDate(dateStr);
 }
-
-let watchId = null;
-
-function startWatching() {
-  if ("geolocation" in navigator) {
-    watchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        getWeatherByCoords(latitude, longitude);
-      },
-      (error) => {
-        console.error("Helymeghatározási hiba:", error);
-        locationNameEl.textContent = "Város: -- (helyadat nem elérhető)";
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 10000,
-      }
-    );
-  }
-}
-
-function stopWatching() {
-  if (watchId !== null) {
-    navigator.geolocation.clearWatch(watchId);
-  }
-}
-
-// indítsd el pl window.onload-ban vagy mikor kell
-startWatching();
-
-
-
-const customDescriptions = {
-  // 🌤️ Derült idő
-  "tiszta égbolt": "Nincs zötyi az égen",
-  
-  // 🌤️ Enyhén felhős
-  "enyhén felhős": "Pár zötyike lebeg az égen",
-  "kevés felhő": "Pár zötyi pihenget az égen",
-
-  // ☁️ Felhős
-  "részben felhős": "Zötyi csak részidőben van jelen",
-  "többnyire felhős": "Zötyik már uralják az eget",
-  "felhős égbolt": "Zötyi mindenütt",
-  "erősen felhős": "Durva zötyitakarás",
-  "borult égbolt": "Teljes zötyitakarás, no napfény",
-
-  // 🌫️ Légköri jelenségek
-  "köd": "Zötyi a föld szintjén, semmit se látsz",
-  "füst": "Zötyiszagú a levegő",
-  "hamu": "Zötyihamu hullik le",
-  "szmog": "Ragacsos zötyilevegő",
-  "por": "Száll a zötyipor mindenfelé",
-  "homok": "Zötyi homokkal spékelve",
-  "homokvihar": "Zötyi tomboló porral",
-  "száraz köd": "Párás zötyike burkol be",
-  "zápor": "Roncik potyognak bőszen",
-
-  // 🌧️ Eső
-  "eső": "RONCII ESIIIK, nedves roncis idő",
-  "enyhe eső": "Csak csepeg, de zötyis",
-  "mérsékelt eső": "Normálisan roncizik",
-  "heves eső": "Zúdul a zötyifelhőből",
-  "záporok": "Zötyifürdő szakaszosan",
-  "heves zápor": "Rohadó zötyizápor",
-  "intenzív zápor": "Nagyon zötyis",
-  "szitáló eső": "Finom ronciszitálás",
-  "jégeső": "Ronci jég módba kapcsolt",
-
-  // ❄️ Hó
-  "havazás": "Ronci potyog pelyhekben",
-  "enyhe havazás": "Csak picit zötyizik",
-  "heves havazás": "Totális zötyihócsapás",
-  "havas eső": "Vegyes zötyi: víz + hó",
-  "hózápor": "Zötyihó sprintel lefelé",
-  "jég": "Kőkemény zötyifagy",
-  "havaseső": "Zötyis zagyvaság hullik",
-
-  // ⚡ Zivatar
-  "zivatar": "Zötyi tombol, dorcájka dörög",
-  "enyhe zivatar": "Zötyike csak próbálkozik",
-  "erős zivatar": "Totál dorcázós zötyi",
-  "villámlás esővel": "Dorcájka + ronci kombó",
-  "villámlás eső nélkül": "Száraz dorcájka-villanás",
-
-  // 💨 Szél
-  "széllökés": "Zötyiszél borzolja a hajad",
-  "viharos szél": "Zötyihurrikán jelleg",
-  "tornádó": "Totál zötyipusztító mód",
-
-  // 🌫️ Egyéb
-  "párás idő": "Zötyi lebeg a semmiben",
-  "ködös idő": "Zötyihomály mindenhol",
-  "derült idő": "Zötyimentes örömnap",
-};
 
 function szamitsSzottyadasSzint(homerseklet) {
   if (homerseklet <= -5) return 1;
@@ -328,11 +226,9 @@ function szamitsSzottyadasSzint(homerseklet) {
   return 10;
 }
 
-
 function frissitsSzottyadasMerce(homerseklet) {
   const szint = szamitsSzottyadasSzint(homerseklet);
   document.getElementById("szottyadasSzint").textContent = szint;
-
   const sávok = document.querySelectorAll(".szint");
   sávok.forEach((sáv, index) => {
     if (index < szint) {
@@ -342,3 +238,51 @@ function frissitsSzottyadasMerce(homerseklet) {
     }
   });
 }
+
+// Egyedi időjárási leírások
+const customDescriptions = {
+  "tiszta égbolt": "Nincs zötyi az égen",
+  "enyhén felhős": "Pár zötyike lebeg az égen",
+  "kevés felhő": "Pár zötyi pihenget az égen",
+  "részben felhős": "Zötyi csak részidőben van jelen",
+  "többnyire felhős": "Zötyik már uralják az eget",
+  "felhős égbolt": "Zötyi mindenütt",
+  "erősen felhős": "Durva zötyitakarás",
+  "borult égbolt": "Teljes zötyitakarás, no napfény",
+  "köd": "Zötyi a föld szintjén, semmit se látsz",
+  "füst": "Zötyiszagú a levegő",
+  "hamu": "Zötyihamu hullik le",
+  "szmog": "Ragacsos zötyilevegő",
+  "por": "Száll a zötyipor mindenfelé",
+  "homok": "Zötyi homokkal spékelve",
+  "homokvihar": "Zötyi tomboló porral",
+  "száraz köd": "Párás zötyike burkol be",
+  "zápor": "Roncik potyognak bőszen",
+  "eső": "RONCII ESIIIK, nedves roncis idő",
+  "enyhe eső": "Csak csepeg, de zötyis",
+  "mérsékelt eső": "Normálisan roncizik",
+  "heves eső": "Zúdul a zötyifelhőből",
+  "záporok": "Zötyifürdő szakaszosan",
+  "heves zápor": "Rohadó zötyizápor",
+  "intenzív zápor": "Nagyon zötyis",
+  "szitáló eső": "Finom ronciszitálás",
+  "jégeső": "Ronci jég módba kapcsolt",
+  "havazás": "Ronci potyog pelyhekben",
+  "enyhe havazás": "Csak picit zötyizik",
+  "heves havazás": "Totális zötyihócsapás",
+  "havas eső": "Vegyes zötyi: víz + hó",
+  "hózápor": "Zötyihó sprintel lefelé",
+  "jég": "Kőkemény zötyifagy",
+  "havaseső": "Zötyis zagyvaság hullik",
+  "zivatar": "Zötyi tombol, dorcájka dörög",
+  "enyhe zivatar": "Zötyike csak próbálkozik",
+  "erős zivatar": "Totál dorcázós zötyi",
+  "villámlás esővel": "Dorcájka + ronci kombó",
+  "villámlás eső nélkül": "Száraz dorcájka-villanás",
+  "széllökés": "Zötyiszél borzolja a hajad",
+  "viharos szél": "Zötyihurrikán jelleg",
+  "tornádó": "Totál zötyipusztító mód",
+  "párás idő": "Zötyi lebeg a semmiben",
+  "ködös idő": "Zötyihomály mindenhol",
+  "derült idő": "Zötyimentes örömnap",
+};
