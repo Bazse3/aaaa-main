@@ -239,3 +239,24 @@ button#searchBtn:hover {
 .szint.active {
   background-color: #f80;
 }
+
+#ad-container {
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  z-index: 999;
+  width: 300px;
+  max-width: 90%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  #ad-container {
+    position: static;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+  }
+}
