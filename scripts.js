@@ -156,48 +156,52 @@ function renderWeatherForDate(dateStr) {
 
   if (hoursForDay.length === 0) {
     weatherDiv.innerHTML = `<p>Nem elérhető adat erre a napra.</p>`;
+    document.getElementById("atlag").innerHTML = "";
     frissitsSzottyadasMerce(null);
     return;
   }
 
-const temps = hoursForDay.map(h => h.temp);
-const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
+  const temps = hoursForDay.map(h => h.temp);
+  const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
 
-const avgTempStr = avgTemp.toFixed(1);
-const maxTemp = Math.max(...temps).toFixed(1);
-const minTemp = Math.min(...temps).toFixed(1);
+  const avgTempStr = avgTemp.toFixed(1);
+  const maxTemp = Math.max(...temps).toFixed(1);
+  const minTemp = Math.min(...temps).toFixed(1);
 
-const isToday = (dateStr === currentDateStr);
+  const isToday = (dateStr === currentDateStr);
 
-// Szottyadás mérce frissítése
-if (isToday) {
-  // próbáljuk meg lekérni a jelenlegi órához tartozó hőmérsékletet
-  const currentHourData = hoursForDay.find(h => {
-    const hour = new Date(h.dt * 1000).getHours();
-    return hour === currentHour;
-  });
-  if (currentHourData) {
-    frissitsSzottyadasMerce(currentHourData.temp);
+  // Szottyadás mérce frissítése
+  if (isToday) {
+    const currentHourData = hoursForDay.find(h => {
+      const hour = new Date(h.dt * 1000).getHours();
+      return hour === currentHour;
+    });
+    if (currentHourData) {
+      frissitsSzottyadasMerce(currentHourData.temp);
+    } else {
+      frissitsSzottyadasMerce(avgTemp); // fallback
+    }
   } else {
-    frissitsSzottyadasMerce(avgTemp); // fallback
+    frissitsSzottyadasMerce(avgTemp);
   }
-} else {
-  frissitsSzottyadasMerce(avgTemp);
-}
 
-weatherDiv.innerHTML = `
-  <div class="day-section">
+  // Átlag/max/min megjelenítése külön szekcióban
+  const atlagDiv = document.getElementById("atlag");
+  atlagDiv.innerHTML = `
     <h2>${isToday ? "Mai nap" : dateStr}</h2>
     <p><strong>Átlag: ${avgTempStr}°C | Max: ${maxTemp}°C | Min: ${minTemp}°C</strong></p>
+  `;
+
+  // Óránkénti kártyák megjelenítése külön
+  weatherDiv.innerHTML = `
     <div class="weather-container">
       ${hoursForDay
         .map(hour => renderHour(hour, isToday, currentHour))
         .join("")}
     </div>
-  </div>
-`;
-
+  `;
 }
+
 
 function renderHour(hour, isToday, currentHour) {
   const dt = new Date(hour.dt * 1000);

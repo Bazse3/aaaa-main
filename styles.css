@@ -42,6 +42,7 @@ button#searchBtn:hover {
   background-color: #135ea2;
 }
 
+
 #locationName {
   margin-top: 5px;
   font-weight: 600;
@@ -81,52 +82,39 @@ button#searchBtn:hover {
 #weather {
   margin-top: 20px;
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.weather-wrapper {
+  flex-direction: row; /* ez kell a vízszintes elrendezéshez */
+  gap: 10px;
   overflow-x: auto;
-  padding-bottom: 10px;
-  margin: 0 auto;
-  max-width: 100%;
-  border-radius: 12px;
-  background: #ffffffaa;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* Scrollbar dizájn (csak desktopon látszik) */
-.weather-wrapper::-webkit-scrollbar {
-  height: 8px;
-}
-.weather-wrapper::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-.weather-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.weather-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 12px;
-  margin-top: 15px;
-  justify-content: center;
+  padding: 10px 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 .weather-card {
+  flex: 0 0 auto; /* fix méret, ne nyúljon */
+  min-width: 90px; /* keskenyebb kártyák */
+  max-width: 90px; /* ne legyen nagyobb */
   background: #e1f5fe;
   border-radius: 8px;
-  padding: 10px;
-  font-size: 13px;
+  padding: 10px 6px;
+  font-size: 14px;
+  text-align: center;
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
-  max-width: 100px;
+  scroll-snap-align: start;
+}
+
+.weather-container {
+  margin: 10px;
+  background-color: #383737;      /* világos szürke háttér */
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
 }
 
 .weather-card strong {
-  display: block;
-  margin-bottom: 5px;
   font-size: 14px;
   color: #0d47a1;
 }
@@ -137,6 +125,7 @@ button#searchBtn:hover {
   font-weight: 700;
   box-shadow: 0 0 10px #ffc107aa;
 }
+
 
 #szottyadasContainer {
   margin: 20px auto;
