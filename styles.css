@@ -85,13 +85,48 @@ button#searchBtn:hover {
   gap: 30px;
 }
 
-/* 🔥 Vízhintes scrollhoz módosított konténer */
+.weather-wrapper {
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin: 0 auto;
+  max-width: 100%;
+  border-radius: 12px;
+  background: #ffffffaa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Scrollbar dizájn (csak desktopon látszik) */
+.weather-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+.weather-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+.weather-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .weather-container {
   display: flex;
-  overflow-x: auto;
-  padding: 10px;
+  flex-wrap: nowrap;
   gap: 10px;
+  padding: 10px;
   scroll-snap-type: x mandatory;
+  min-height: 170px;
+}
+
+.weather-card {
+  flex: 0 0 auto;
+  min-width: 100px;
+  max-width: 110px;
+  background: #e1f5fe;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+  scroll-snap-align: start;
 }
 
 /* 🔥 Kártyák vízszintre optimalizálva */
