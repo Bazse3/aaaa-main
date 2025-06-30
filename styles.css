@@ -108,44 +108,26 @@ button#searchBtn:hover {
 }
 
 .weather-container {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 10px;
-  padding: 10px;
-  scroll-snap-type: x mandatory;
-  min-height: 170px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+  justify-content: center;
 }
 
 .weather-card {
-  flex: 0 0 auto;
-  min-width: 100px;
-  max-width: 110px;
   background: #e1f5fe;
   border-radius: 8px;
   padding: 10px;
-  font-size: 14px;
-  text-align: center;
+  font-size: 13px;
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
-  scroll-snap-align: start;
-}
-
-/* 🔥 Kártyák vízszintre optimalizálva */
-.weather-card {
-  min-width: 120px;
-  flex: 0 0 auto;
-  background: #e1f5fe;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 14px;
-  text-align: center;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
-  scroll-snap-align: start;
+  max-width: 100px;
 }
 
 .weather-card strong {
   display: block;
-  margin-bottom: 6px;
-  font-size: 16px;
+  margin-bottom: 5px;
+  font-size: 14px;
   color: #0d47a1;
 }
 
