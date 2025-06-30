@@ -156,81 +156,6 @@ button#searchBtn:hover {
   background-color: #f7961c;
 }
 
-/* 🌒 Sötét mód */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #121212;
-    color: #eee;
-  }
-
-  .weather-container {
-    background-color: #2c2c2c;
-  }
-
-  #locationName {
-    color: #eee !important;
-  }
-
-  #weather .weather-card:not(.current-hour) {
-    background-color: #1e1e1e;
-    color: #eee;
-    box-shadow: 0 0 8px #444;
-  }
-
-  #weather .weather-card img .weather-container {
-    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
-  }
-}
-
-/* 📱 Mobil reszponzív */
-@media (max-width: 600px) {
-  #search-container {
-    flex-direction: column;
-    max-width: 100%;
-    gap: 8px;
-  }
-
-  #cityInput {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  button#searchBtn {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  #dateSelector {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    max-width: 100%;
-  }
-
-  .date-button {
-    padding: 10px 12px;
-    font-size: 16px;
-  }
-
-  .weather-card img {
-    width: 36px !important;
-    height: 36px !important;
-  }
-}
-
-/* Kis tabletek, nagyobb mobilok */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .date-button {
-    padding: 10px 16px;
-    font-size: 17px;
-  }
-
-  .weather-card img {
-    width: 44px !important;
-    height: 44px !important;
-  }
-}
-
 /* TOP container - a két reklám és info egy sorban, vagy mobilon egymás alatt */
 #top-container {
   position: relative;
@@ -253,6 +178,7 @@ button#searchBtn:hover {
   border-radius: 6px;
   overflow: hidden;
   background: #fff;
+  transition: background-color 0.3s ease;
 }
 
 /* Jobb felső nagyobb banner */
@@ -263,6 +189,7 @@ button#searchBtn:hover {
   border-radius: 6px;
   overflow: hidden;
   background: #fff;
+  transition: background-color 0.3s ease;
 }
 
 /* Az info szöveg a két banner alatt 100%-ban */
@@ -277,6 +204,7 @@ button#searchBtn:hover {
   color: #003366;
   font-weight: 600;
   text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Mobilon egymás alá rendezzük, banner méretek is csökkennek */
@@ -316,6 +244,7 @@ button#searchBtn:hover {
   max-width: 720px;
   width: 100%;
   box-sizing: border-box;
+  transition: background-color 0.3s ease;
 }
 
 /* Alsó reklám dobozok */
@@ -326,6 +255,7 @@ button#searchBtn:hover {
   border-radius: 8px;
   overflow: hidden;
   background: white;
+  transition: background-color 0.3s ease;
 }
 
 /* Mobilon az alsó is egymás alá kerülhet */
@@ -340,5 +270,55 @@ button#searchBtn:hover {
   #bottom-ads .footer-ad {
     width: 100%;
     height: auto !important;
+  }
+}
+
+/* 🌒 Sötét mód */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #eee;
+  }
+
+  .weather-container {
+    background-color: #2c2c2c;
+  }
+
+  #locationName {
+    color: #eee !important;
+  }
+
+  #weather .weather-card:not(.current-hour) {
+    background-color: #1e1e1e;
+    color: #eee;
+    box-shadow: 0 0 8px #444;
+  }
+
+  #weather .weather-card img .weather-container {
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+  }
+
+  /* Felső bannerek és info */
+  #top-left-ad,
+  #top-right-ad {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(255 255 255 / 0.1);
+  }
+
+  #top-info {
+    background-color: #2c2c2c;
+    color: #ddd;
+    box-shadow: 0 0 8px rgba(255 255 255 / 0.1);
+  }
+
+  /* Alsó reklámok konténer és dobozok */
+  #bottom-ads {
+    background: rgba(30, 30, 30, 0.95);
+    box-shadow: 0 -1px 10px rgba(255,255,255,0.1);
+  }
+
+  #bottom-ads .footer-ad {
+    background: #2a2a2a;
+    box-shadow: 0 0 8px rgba(255 255 255 / 0.1);
   }
 }
