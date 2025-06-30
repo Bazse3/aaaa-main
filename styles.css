@@ -231,89 +231,114 @@ button#searchBtn:hover {
   }
 }
 
-/* 💰 Reklám doboz jobbra lent */
-#ad-container {
-  position: fixed;
-  bottom: 20px;
-  right: 10px;
-  z-index: 999;
-  width: 300px;
-  max-width: 90%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  border-radius: 10px;
-  overflow: hidden;
+/* TOP container - a két reklám és info egy sorban, vagy mobilon egymás alatt */
+#top-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
-  #ad-container {
-    position: static;
-    margin: 20px auto;
-    display: flex;
+/* Bal oldali nagy banner */
+#top-left-ad {
+  width: 728px;
+  height: 90px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Jobb felső nagyobb banner */
+#top-right-ad {
+  width: 300px;
+  height: 250px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Az info szöveg a két banner alatt 100%-ban */
+#top-info {
+  flex-basis: 100%;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #f0f8ff;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  font-size: 16px;
+  color: #003366;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Mobilon egymás alá rendezzük, banner méretek is csökkennek */
+@media (max-width: 1024px) {
+  #top-container {
+    flex-wrap: wrap;
     justify-content: center;
+  }
+
+  #top-left-ad, #top-right-ad {
+    width: 100%;
+    max-width: 728px;
+    margin-bottom: 10px;
+    height: auto !important; /* hogy az iframe jól igazodjon */
+  }
+
+  #top-info {
+    margin-top: 0;
   }
 }
 
-#footer-ads {
+/* ------------------------------------ */
+
+/* Az alsó két banner fixen a képernyő alján, egymás mellett középen */
+#bottom-ads {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;        /* nagyobb távolság a hirdetések között */
-  flex-wrap: wrap;  /* törjön sort mobilon */
-  margin-top: 30px;
-  padding: 15px 20px;
-  background-color: #fafafa;
-  border-radius: 8px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.08);
+  gap: 20px;
+  background: rgba(255,255,255,0.95);
+  padding: 8px 15px;
+  box-shadow: 0 -1px 10px rgba(0,0,0,0.2);
+  border-radius: 12px 12px 0 0;
+  z-index: 11000;
+  max-width: 720px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Mindhárom hirdetés doboz */
-.footer-ad {
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+/* Alsó reklám dobozok */
+#bottom-ads .footer-ad {
+  width: 320px;
+  height: 50px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
   border-radius: 8px;
   overflow: hidden;
   background: white;
 }
 
-/* Méretezés egyedileg */
-.footer-ad:nth-child(1) {
-  width: 320px;
-  height: 60px;
-}
-
-.footer-ad:nth-child(2) {
-  width: 320px;
-  height: 50px;
-}
-
-.footer-ad:nth-child(3) {
-  width: 728px;
-  height: 90px;
-}
-
-/* Mobilon legyen egymás alatt, középen, max szélesség */
-@media (max-width: 900px) {
-  #footer-ads {
+/* Mobilon az alsó is egymás alá kerülhet */
+@media (max-width: 700px) {
+  #bottom-ads {
     flex-direction: column;
-    gap: 20px;
+    max-width: 320px;
     padding: 10px;
+    border-radius: 12px;
   }
-  .footer-ad {
-    width: 100% !important;
-    max-width: 400px;
-    height: auto !important; /* engedd az iframe magasságát ha kell */
-    margin: 0 auto;
-  }
-}
 
-#top-right-ad {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  width: 300px;
-  height: 250px;
-  z-index: 10000;
-  box-shadow: 0 0 8px rgba(0,0,0,0.15);
-  border-radius: 6px;
-  overflow: hidden;
-  background: #fff;
+  #bottom-ads .footer-ad {
+    width: 100%;
+    height: auto !important;
+  }
 }
