@@ -143,23 +143,45 @@ function renderWeatherForDate(dateStr) {
   const currentDateStr = now.toISOString().split("T")[0];
   const currentHour = now.getHours();
 
-  if (dateStr < currentDateStr) {
-    dateStr = currentDateStr;
-    selectDate(currentDateStr);
+  const selected = new Date(dateStr + "T00:00:00");
+  const nextDay = new Date(selected.getTime() + 24 * 60 * 60 * 1000);
+
+  // 📦 Ha a mai napról van szó és nincs mentett adat, elmentjük
+  if (dateStr === currentDateStr) {
+    const fullTodayData = weatherDataGlobal.hourly.filter((hour) => {
+      const dt = new Date(hour.dt * 1000);
+      return dt >= selected && dt < nextDay;
+    });
+
+    // Csak ha legalább 1 óra van
+    if (fullTodayData.length > 0) {
+      localStorage.setItem("weather_backup_" + currentDateStr, JSON.stringify(fullTodayData));
+    }
   }
 
-  const hoursForDay = weatherDataGlobal.hourly.filter((hour) => {
-    const dt = new Date(hour.dt * 1000);
-    const localDateStr = dt.toISOString().split("T")[0];
-    return localDateStr === dateStr;
-  });
+  // 📥 Megnézzük, van-e mentett adat az adott napra
+  const savedData = localStorage.getItem("weather_backup_" + dateStr);
+  let hoursForDay;
 
+  if (savedData) {
+    hoursForDay = JSON.parse(savedData);
+  } else {
+    hoursForDay = weatherDataGlobal.hourly.filter((hour) => {
+      const dt = new Date(hour.dt * 1000);
+      return dt >= selected && dt < nextDay;
+    });
+  }
+
+  // 🔁 ha nincs adat
   if (hoursForDay.length === 0) {
     weatherDiv.innerHTML = `<p>Nem elérhető adat erre a napra.</p>`;
     document.getElementById("atlag").innerHTML = "";
     frissitsSzottyadasMerce(null);
     return;
   }
+
+  // ⏬ további renderelés változatlanul ...
+
 
   const temps = hoursForDay.map(h => h.temp);
   const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
