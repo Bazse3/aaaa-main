@@ -7,10 +7,6 @@ body {
   color: #333;
 }
 
-header {
-  margin-bottom: 20px;
-}
-
 #search-container {
   margin: 10px auto;
   max-width: 320px;
@@ -18,6 +14,21 @@ header {
   justify-content: center;
   gap: 10px;
 }
+
+#left-container {
+  margin-left: 70px;
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 500px;
+  height: 300px;
+  background-color: #cceeff;
+  border-radius: 10px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  z-index: 999;
+  background-color: #2c2c2c;
+}
+
 
 #cityInput {
   padding: 10px;
@@ -44,8 +55,9 @@ button#searchBtn:hover {
 
 #locationName {
   margin-top: 5px;
-  font-weight: 600;
-  color: #555;
+  font-weight: bold;
+  color: #ffeb3b;
+  text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
 }
 
 #dateSelector {
@@ -104,7 +116,7 @@ button#searchBtn:hover {
 }
 
 .weather-container {
-  margin: 10px;
+  margin: 50px;
   background-color: #dff4ff;
   border-radius: 10px;
   padding: 10px;
@@ -156,65 +168,6 @@ button#searchBtn:hover {
   background-color: #f7961c;
 }
 
-/* TOP container új elrendezés: bal oldalon nagy banner, jobb oldalon jobb felső reklám + infó egymás mellett */
-#top-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1200px;
-  margin: 10px auto;
-  padding: 10px 20px;
-  box-sizing: border-box;
-}
-
-/* Bal oldali nagy banner */
-#top-left-ad {
-  width: 728px;
-  height: 90px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  border-radius: 6px;
-  overflow: hidden;
-  background: #fff;
-  flex-shrink: 0;
-}
-
-/* Jobb oldali jobb felső blokk: reklám + info egymás mellett */
-#top-right-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 15px;
-  /* max szélesség hogy ne nőjön túl */
-  max-width: 350px;
-  flex-wrap: nowrap;
-}
-
-/* Jobb felső reklám */
-#top-right-ad {
-  width: 300px;
-  height: 250px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  border-radius: 6px;
-  overflow: hidden;
-  background: #fff;
-  flex-shrink: 0;
-}
-
-/* A figyelmeztető infó doboz a jobb reklám mellett */
-#top-info {
-  flex: 1;
-  background: #f0f8ff;
-  border-radius: 6px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  font-size: 16px;
-  color: #003366;
-  font-weight: 600;
-  text-align: left;
-  padding: 10px 15px;
-  user-select: none;
-}
-
-/* Alsó két banner fixen a képernyő alján, egymás mellett középen */
 #bottom-ads {
   position: fixed;
   bottom: 0;
@@ -232,17 +185,16 @@ button#searchBtn:hover {
   box-sizing: border-box;
 }
 
-/* Alsó reklám dobozok */
 #bottom-ads .footer-ad {
   width: 320px;
   height: 50px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  background: white;
   border-radius: 8px;
   overflow: hidden;
-  background: white;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
 
-/* 🌒 Sötét mód */
+/* 🌙 Sötét mód */
 @media (prefers-color-scheme: dark) {
   body {
     background: #121212;
@@ -253,31 +205,10 @@ button#searchBtn:hover {
     background-color: #2c2c2c;
   }
 
-  #locationName {
-    color: #eee !important;
-  }
-
   #weather .weather-card:not(.current-hour) {
     background-color: #1e1e1e;
     color: #eee;
     box-shadow: 0 0 8px #444;
-  }
-
-  #weather .weather-card img,
-  .weather-container {
-    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
-  }
-
-  #top-left-ad,
-  #top-right-ad {
-    background-color: #1e1e1e;
-    box-shadow: 0 0 10px rgba(255 255 255 / 0.1);
-  }
-
-  #top-info {
-    background-color: #2c2c2c;
-    color: #ddd;
-    box-shadow: 0 0 8px rgba(255 255 255 / 0.1);
   }
 
   #bottom-ads {
@@ -289,48 +220,27 @@ button#searchBtn:hover {
     background: #333;
     box-shadow: 0 0 8px rgba(255,255,255,0.1);
   }
+
+  #locationName {
+    color: #ffee33;
+    text-shadow: 0 0 6px #ffee33, 0 0 12px #ffee33;
+  }
 }
 
-/* 📱 Mobil reszponzív */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   #top-container {
     flex-direction: column;
-    align-items: center;
-  }
-
-  #top-left-ad {
-    width: 100%;
-    max-width: 728px;
-    height: 90px;
-    margin-bottom: 10px;
-  }
-
-  #top-right-container {
-    width: 100%;
-    max-width: 350px;
-    justify-content: center;
-  }
-
-  #top-right-ad {
-    width: 300px;
-    height: 250px;
-  }
-
-  #top-info {
-    margin-top: 10px;
-    text-align: center;
-    padding: 10px;
+    align-items: flex-end;
   }
 
   #bottom-ads {
     flex-direction: column;
     max-width: 320px;
     padding: 10px;
-    border-radius: 12px;
   }
 
   #bottom-ads .footer-ad {
     width: 100%;
-    height: auto !important;
+    height: auto;
   }
 }

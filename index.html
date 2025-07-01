@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-  <header>
     <h1>Óránkénti szottyadás</h1>
     <div id="search-container">
       <input type="text" id="cityInput" placeholder="Írd be a várost..." />
@@ -15,7 +14,20 @@
     </div>
     <h2 id="locationName">Város: --</h2>
     <div id="dateSelector"></div>
-  </header>
+
+<div id="left-container">
+    <script type="text/javascript">
+    atOptions = {
+      'key': '427423b06aa913361122e7ec2e0eb736',
+      'format': 'iframe',
+      'height': 250,
+      'width': 300,
+      'params': {}
+    };
+  </script>
+  <script type="text/javascript" src="//www.highperformanceformat.com/427423b06aa913361122e7ec2e0eb736/invoke.js"></script>
+</div>
+
 
   <div id="szottyadasContainer">
     <div id="szottyadasLabel">Szottyadás mérce: <span id="szottyadasSzint">–</span></div>
@@ -33,27 +45,6 @@
       <div class="szint" data-szint="10"></div>
     </div>
   </div>
-
-
-  <div id="top-right-container">
-    <div id="top-right-ad">
-    <script type="text/javascript">
-      atOptions = {
-        'key': '427423b06aa913361122e7ec2e0eb736',
-        'format': 'iframe',
-        'height': 250,
-        'width': 300,
-        'params': {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/427423b06aa913361122e7ec2e0eb736/invoke.js"></script>
-    </div>
-    <div id="top-info">
-      <p><strong>Figyelem:</strong> Ha meleg van, igyál sok vizet! Kerüld a közvetlen napsütést, és pihenj gyakran. Maradj hidratált, vigyázz magadra! 💧🔥</p>
-    </div>
-  </div>
-</div>
-
 
   <section id="atlag"></section>
   <section id="weather"></section>
