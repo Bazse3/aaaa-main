@@ -21,7 +21,7 @@ body {
 
 #top-content {
   display: flex;
-  justify-content: flex-start; /* korábban: center */
+  justify-content: flex-start; 
   align-items: flex-start;
   gap: 30px;
   flex-wrap: wrap;
@@ -30,18 +30,19 @@ body {
 }
 
 
-/* Bal reklám konténer */
 #left-container {
   flex: 0 0 300px;
   margin-left: -20px;
-  background-color: #2c2c2c;
+  margin-top: -130px; 
+  background-color: white;
   border-radius: 10px;
   box-shadow: 2px 0 8px rgba(0,0,0,0.1);
   padding: 10px;
   box-sizing: border-box;
   width: 600px;
-  height: 300px;
+  height: 450px;
 }
+
 
 #szottyadas-date-container {
   width: 600px;
@@ -74,16 +75,14 @@ button#searchBtn {
   transition: background-color 0.3s ease;
 }
 
-button#searchBtn:hover {
-  background-color: #2a7ab9;
-}
-
 #locationName {
   margin-top: 5px;
   font-weight: bold;
-  color: #ffeb3b;
-  text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
+  color: #f7961c;
+  text-shadow: 0 0 4px #fbefbb, 0 0 8px #fbefbb;
 }
+
+
 
 #dateSelector {
   margin: 20px auto;
@@ -131,18 +130,21 @@ button#searchBtn:hover {
   flex: 0 0 auto;
   min-width: 90px;
   max-width: 90px;
-  background: #ffffff;
+  background: #fafafa; 
+  border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px 6px;
   font-size: 14px;
   text-align: center;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   scroll-snap-align: start;
 }
 
+
 .weather-container {
   margin: 50px;
-  background-color: #dff4ff;
+  background-color: #ffffff;
+  border: 2px solid #ccc;  
   border-radius: 10px;
   padding: 10px;
   display: flex;
@@ -151,10 +153,12 @@ button#searchBtn:hover {
   scroll-snap-type: x mandatory;
 }
 
+
 .weather-card strong {
   font-size: 14px;
-  color: #0d47a1;
+  color: #370ad8; 
 }
+
 
 .weather-card.current-hour {
   background: #ffe082;
@@ -226,6 +230,10 @@ button#searchBtn:hover {
     color: #eee;
   }
 
+  #left-container{
+    background: #2c2c2c;
+  }
+
   .weather-container {
     background-color: #2c2c2c;
   }
@@ -236,6 +244,7 @@ button#searchBtn:hover {
     box-shadow: 0 0 8px #444;
   }
 
+  
   #bottom-ads {
     background: rgba(20, 20, 20, 0.95);
     box-shadow: 0 -1px 10px rgba(255,255,255,0.2);
@@ -247,8 +256,8 @@ button#searchBtn:hover {
   }
 
   #locationName {
-    color: #ffee33;
-    text-shadow: 0 0 6px #ffee33, 0 0 12px #ffee33;
+  color: #ffeb3b;
+  text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
   }
 }
 
