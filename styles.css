@@ -41,12 +41,13 @@ body {
   box-sizing: border-box;
   width: 600px;
   height: 450px;
+  border: 2px solid #ddd;
 }
 
 
 #szottyadas-date-container {
-  width: 600px;
-  margin-left: 250px;
+  width: 500px;
+  margin-left: 240px;
   overflow: hidden;
   display: flex;
   gap: 20px;
@@ -200,6 +201,7 @@ button#searchBtn {
 #bottom-ads {
   position: fixed;
   bottom: 0;
+  border: 2px solid #ddd;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -236,6 +238,7 @@ button#searchBtn {
 
   .weather-container {
     background-color: #2c2c2c;
+    
   }
 
   #weather .weather-card:not(.current-hour) {
@@ -279,6 +282,8 @@ button#searchBtn {
   }
 }
 
+body.weather-empty #szottyadasContainer {
 
-
-
+  transform: translateX(30px);
+}
+  

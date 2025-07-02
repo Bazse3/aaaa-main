@@ -327,3 +327,21 @@ const customDescriptions = {
   "ködös idő": "Zötyihomály mindenhol",
   "derült idő": "Zötyimentes örömnap",
 };
+
+
+  const weather = document.getElementById("weather");
+
+  function ellenorizWeatherTartalom() {
+    if (weather.children.length === 0) {
+      document.body.classList.add("weather-empty");
+      console.log("empty");
+    } else {
+      document.body.classList.remove("weather-empty");
+      console.log("van benne");
+    }
+  }
+
+  ellenorizWeatherTartalom();
+
+  const observer = new MutationObserver(ellenorizWeatherTartalom);
+  observer.observe(weather, { childList: true });
