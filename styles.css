@@ -263,24 +263,32 @@ button#searchBtn {
   text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
   }
 }
+
 @media (max-width: 768px) {
   #top-content {
     flex-direction: column;
     align-items: center;
     margin-left: 0;
-    gap: 20px;
   }
 
   #left-container {
-    width: 90%;
-    margin: 0 auto;
-    height: auto;
+    width: 100%;
+    max-width: 320px;
+    margin-left: 0;
+    margin-top: 10px;
   }
 
   #szottyadas-date-container {
+    width: 100%;
     margin-left: 0;
-    max-width: 100%;
     justify-content: center;
+  }
+
+  #search-container {
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    gap: 8px;
   }
 
   #szottyadasContainer {
@@ -322,17 +330,16 @@ button#searchBtn {
     padding: 10px;
   }
 
-  #bottom-ads .footer-ad {
-    width: 100% !important;
-    max-width: 320px;
-    height: auto;
+  #bottom-ads {
+    flex-direction: column;
+    max-width: 100%;
+    padding: 10px;
+    align-items: center;
   }
 
-  #search-container {
-    flex-direction: column;
+  #bottom-ads .footer-ad {
     width: 100%;
-    gap: 8px;
-    max-width: 90%;
+    max-width: 320px;
   }
 
   #cityInput,

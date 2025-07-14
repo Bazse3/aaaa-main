@@ -347,22 +347,31 @@ const customDescriptions = {
   observer.observe(weather, { childList: true });
 
 
-if (window.innerWidth >= 768) {
-  // Reklám 1
-  const s1 = document.createElement("script");
-  s1.type = "text/javascript";
-  s1.src = "//www.highperformanceformat.com/16bad07b7a4714bb272fd2eb08c44791/invoke.js";
-  document.getElementById("ad1").appendChild(s1);
+  function toltReklamot(id, kulcs) {
+    const container = document.getElementById(id);
+    if (container) {
+      const atOptions = {
+        'key': kulcs,
+        'format': 'iframe',
+        'height': 60,
+        'width': 468,
+        'params': {}
+      };
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "//www.highperformanceformat.com/" + kulcs + "/invoke.js";
+      container.appendChild(script);
+    }
+  }
 
-  // Reklám 2
-  const s2 = document.createElement("script");
-  s2.type = "text/javascript";
-  s2.src = "//www.highperformanceformat.com/8e146b349def58eb449e117d7fee4221/invoke.js";
-  document.getElementById("ad2").appendChild(s2);
+  const szelesseg = window.innerWidth;
 
-  // Reklám 3
-  const s3 = document.createElement("script");
-  s3.type = "text/javascript";
-  s3.src = "//www.highperformanceformat.com/29a246baa8f6ee357125520269d2d34d/invoke.js";
-  document.getElementById("ad3").appendChild(s3);
-}
+  if (szelesseg >= 768) {
+    // 💻 Asztali: mindhárom reklám
+    toltReklamot("ad1", "16bad07b7a4714bb272fd2eb08c44791");
+    toltReklamot("ad2", "8e146b349def58eb449e117d7fee4221");
+    toltReklamot("ad3", "29a246baa8f6ee357125520269d2d34d");
+  } else {
+    // 📱 Mobil: csak egy reklám maradjon lent
+    toltReklamot("ad3", "29a246baa8f6ee357125520269d2d34d");
+  }
