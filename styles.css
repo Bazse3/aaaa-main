@@ -15,6 +15,18 @@ body {
   gap: 10px;
 }
 
+.szint {
+  flex: 1;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+.szint.active {
+  background-color: #f7961c;
+}
+
+
 #atlag{
   margin-top: -100px;
 }
@@ -182,8 +194,12 @@ button#searchBtn {
 
 #szottyadasMerce {
   display: flex;
+  width: 100%;     /* vagy max-width: 400px; ha túl széles lenne */
+  max-width: 400px;
   gap: 2px;
+  margin: 0 auto;
 }
+
 
 .szint {
   flex: 1;
