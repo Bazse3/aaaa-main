@@ -57,7 +57,8 @@ body {
 
 #szottyadas-date-container {
   width: 500px;
-  margin-left: 240px;
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden;
   display: flex;
   gap: 20px;
