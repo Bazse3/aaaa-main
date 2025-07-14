@@ -365,16 +365,8 @@ button#searchBtn {
     font-size: 13px;
   }
 
-  body.weather-empty #szottyadasContainer {
-
-  transform: translateX(-300px);
-}
   
 
 }
 
-body.weather-empty #szottyadasContainer {
 
-  transform: translateX(30px);
-}
-  
