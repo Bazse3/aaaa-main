@@ -268,7 +268,14 @@ function szamitsSzottyadasSzint(homerseklet) {
 }
 
 function frissitsSzottyadasMerce(homerseklet) {
+  if (homerseklet == null) {
+    console.log("Nincs hőmérséklet adat a szottyadás mércéhez.");
+    document.getElementById("szottyadasSzint").textContent = "–";
+    document.querySelectorAll(".szint").forEach(sáv => sáv.classList.remove("active"));
+    return;
+  }
   const szint = szamitsSzottyadasSzint(homerseklet);
+  console.log(`Hőmérséklet: ${homerseklet} °C, szottyadás szint: ${szint}`);
   document.getElementById("szottyadasSzint").textContent = szint;
   const sávok = document.querySelectorAll(".szint");
   sávok.forEach((sáv, index) => {
@@ -279,6 +286,7 @@ function frissitsSzottyadasMerce(homerseklet) {
     }
   });
 }
+
 
 // Egyedi időjárási leírások
 const customDescriptions = {
@@ -347,33 +355,34 @@ const customDescriptions = {
   observer.observe(weather, { childList: true });
 
 
+function toltReklamot(elemId, kulcs, width, height) {
+  const target = document.getElementById(elemId);
+  if (target) {
+    target.style.width = width + "px";
+    target.style.height = height + "px";
 
-  function toltReklamot(elemId, kulcs) {
-    const target = document.getElementById(elemId);
-    if (target) {
-      const atOptions = {
-        'key': kulcs,
-        'format': 'iframe',
-        'height': 90,
-        'width': 728,
-        'params': {}
-      };
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = "//www.highperformanceformat.com/" + kulcs + "/invoke.js";
-      target.appendChild(script);
-    }
+    const atOptions = {
+      'key': kulcs,
+      'format': 'iframe',
+      'height': height,
+      'width': width,
+      'params': {}
+    };
+
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "//www.highperformanceformat.com/" + kulcs + "/invoke.js";
+    target.appendChild(script);
   }
+}
 
-  const szelesseg = window.innerWidth;
+const szelesseg = window.innerWidth;
 
-  if (szelesseg >= 768) {
-    // 🖥️ Asztali eszköz – reklámok betöltése
-    toltReklamot("ad1", "16bad07b7a4714bb272fd2eb08c44791"); // 468x60
-    toltReklamot("ad2", "8e146b349def58eb449e117d7fee4221"); // 728x90
-    toltReklamot("ad3", "29a246baa8f6ee357125520269d2d34d"); // 320x50
-  } else {
-    // 📱 Mobil – reklámok elrejtése
-    const footer = document.getElementById("bottom-ads");
-    if (footer) footer.style.display = "none";
-  }
+if (szelesseg >= 768) {
+  toltReklamot("ad1", "16bad07b7a4714bb272fd2eb08c44791", 320, 50);
+  toltReklamot("ad2", "8e146b349def58eb449e117d7fee4221", 728, 90);
+  toltReklamot("ad3", "29a246baa8f6ee357125520269d2d34d", 320, 50);
+} else {
+  const footer = document.getElementById("bottom-ads");
+  if (footer) footer.style.display = "none";
+}
