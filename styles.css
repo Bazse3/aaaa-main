@@ -367,7 +367,7 @@ button#searchBtn {
 
   body.weather-empty #szottyadasContainer {
 
-  transform: translateX(-30px);
+  transform: translateX(-300px);
 }
   
 
