@@ -345,3 +345,24 @@ const customDescriptions = {
 
   const observer = new MutationObserver(ellenorizWeatherTartalom);
   observer.observe(weather, { childList: true });
+
+
+if (window.innerWidth >= 768) {
+  // Reklám 1
+  const s1 = document.createElement("script");
+  s1.type = "text/javascript";
+  s1.src = "//www.highperformanceformat.com/16bad07b7a4714bb272fd2eb08c44791/invoke.js";
+  document.getElementById("ad1").appendChild(s1);
+
+  // Reklám 2
+  const s2 = document.createElement("script");
+  s2.type = "text/javascript";
+  s2.src = "//www.highperformanceformat.com/8e146b349def58eb449e117d7fee4221/invoke.js";
+  document.getElementById("ad2").appendChild(s2);
+
+  // Reklám 3
+  const s3 = document.createElement("script");
+  s3.type = "text/javascript";
+  s3.src = "//www.highperformanceformat.com/29a246baa8f6ee357125520269d2d34d/invoke.js";
+  document.getElementById("ad3").appendChild(s3);
+}
