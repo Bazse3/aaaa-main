@@ -364,6 +364,13 @@ button#searchBtn {
     padding: 6px 10px;
     font-size: 13px;
   }
+
+  body.weather-empty #szottyadasContainer {
+
+  transform: translateX(-30px);
+}
+  
+
 }
 
 body.weather-empty #szottyadasContainer {
